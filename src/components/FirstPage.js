@@ -1,40 +1,48 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 function FirstPage() {
-  // ===== ADJUST CLOUD POSITION HERE =====
-  // X: negative = move left, positive = move right (in vw units)
-  // Y: negative = move up, positive = move down (in vh units)
-  // Cloud is scaled to 1.2x to prevent gaps when repositioning
-  const CLOUD_SHIFT_X = -4;  // <-- Edit this value
-  const CLOUD_SHIFT_Y = 2;  // <-- Edit this value
-  const CLOUD_SCALE = 1.1;  // <-- Edit to scale cloud (1.2 = 120%)
-  // ======================================
+  
+  // Track window width for responsive layout
+  const [isPortrait, setIsPortrait] = useState(
+    typeof window !== 'undefined' && window.innerWidth < 768
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsPortrait(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <section style={{
       background: '#272424',
       position: 'relative',
       width: '100%',
-      height: '100vh',
+      minHeight: '100vh',
       overflow: 'hidden',
-      overflowX: 'hidden',  // Prevent horizontal scroll
+      overflowX: 'hidden',
       display: 'flex',
+      flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center',
-      padding: '0px 0px 80px 5px'  // Minimal top/horizontal, more bottom to avoid clouds
+      justifyContent: isPortrait ? 'space-between' : 'flex-end',
+      padding: 0
     }}>
       {/* Main Content Container */}
       <div style={{
         display: 'flex',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         justifyContent: 'center',
         maxWidth: '1400px',
         width: '100%',
-        gap: '50px',
+        gap: 'clamp(10px, 1vw, 20px)',
+        flexDirection: isPortrait ? 'column' : 'row',
         flexWrap: 'wrap',
         zIndex: 1,
         position: 'relative',
-        marginTop: '-50px'
+        padding: isPortrait ? 'clamp(20px, 4vh, 50px) clamp(15px, 3vw, 40px)' : 'clamp(20px, 3vh, 40px) clamp(15px, 2vw, 40px) clamp(15px, 2vh, 30px)',
       }}>
         {/* iPhone Mockup */}
         <div style={{
@@ -42,9 +50,9 @@ function FirstPage() {
           position: 'relative',
           flexShrink: 0,
           width: '100%',
-          maxWidth: '650px',
-          minWidth: '500px',
-          marginLeft: '-50px'
+          maxWidth: isPortrait ? '320px' : 'min(420px, 35vw)',
+          minWidth: '100px',
+          order: isPortrait ? 3 : 1
         }}>
           <img 
             alt="iPhone Mockup" 
@@ -57,17 +65,19 @@ function FirstPage() {
           />
         </div>
 
-        {/* Right Content Section */}
+        {/* Content Section - Logo and Description */}
         <div style={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '25px',
+          gap: 'clamp(15px, 3vh, 25px)',
           alignItems: 'center',
           justifyContent: 'center',
           position: 'relative',
-          flex: '1',
-          minWidth: '350px',
-          maxWidth: '800px'
+          flex: isPortrait ? '1 1 100%' : '1 1 300px',
+          minWidth: '280px',
+          maxWidth: isPortrait ? '100%' : '800px',
+          order: isPortrait ? 1 : 2,
+          width: isPortrait ? '100%' : 'auto'
         }}>
           {/* Logo and Description Container */}
           <div style={{
@@ -75,7 +85,7 @@ function FirstPage() {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            paddingBottom: '30px',
+            paddingBottom: isPortrait ? '0' : '30px',
             paddingTop: 0,
             paddingLeft: 0,
             paddingRight: 0,
@@ -84,9 +94,9 @@ function FirstPage() {
           }}>
             {/* Logo titipgo */}
             <div style={{
-              marginBottom: '15px',
+              marginBottom: 'clamp(10px, 2vh, 15px)',
               width: '100%',
-              maxWidth: '220px'
+              maxWidth: 'clamp(180px, 30vw, 220px)'
             }}>
               <img 
                 src="/logotitipgo.png" 
@@ -106,7 +116,7 @@ function FirstPage() {
               lineHeight: '1.5',
               position: 'relative',
               color: '#F5EDEB',
-              fontSize: 'clamp(14px, 2vw, 24px)',
+              fontSize: 'clamp(8px, 2vw, 20px)',
               textAlign: 'center',
               margin: 0,
               width: '100%'
@@ -115,50 +125,93 @@ function FirstPage() {
             </p>
           </div>
 
-          {/* CTA Button */}
-          <button 
-            onClick={() => window.open('https://www.figma.com/proto/zDl5EB8pvPLEPoCPM8syL6/prototype?node-id=4-2&t=HjdL5ODOXfDeIBxh-1', '_blank')}
-            style={{
-              background: '#1E7DF2',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '8px 24px',
-              position: 'relative',
-              borderRadius: '8px',
-              border: 'none',
-              cursor: 'pointer',
-              whiteSpace: 'nowrap',
-              fontFamily: 'Afacad, sans-serif',
-              fontWeight: 'bold',
-              lineHeight: 'normal',
-              color: '#F5EDEB',
-              fontSize: 'clamp(16px, 2vw, 24px)',
-              transition: 'background 0.3s ease, color 0.3s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.background = '#5CB6FF';
-              e.target.style.color = '#121212';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.background = '#1E7DF2';
-              e.target.style.color = '#F5EDEB';
-            }}
-          >
-            Try Our Demo Now!
-          </button>
+          {/* CTA Button - Show on Desktop only */}
+          {!isPortrait && (
+            <button 
+              onClick={() => window.open('https://www.figma.com/proto/zDl5EB8pvPLEPoCPM8syL6/prototype?node-id=4-2&t=HjdL5ODOXfDeIBxh-1', '_blank')}
+              style={{
+                background: '#1E7DF2',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 'clamp(8px, 1.5vh, 12px) clamp(20px, 4vw, 30px)',
+                position: 'relative',
+                borderRadius: '8px',
+                border: 'none',
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+                fontFamily: 'Afacad, sans-serif',
+                fontWeight: 'bold',
+                lineHeight: 'normal',
+                color: '#F5EDEB',
+                fontSize: 'clamp(14px, 2.5vw, 24px)',
+                transition: 'background 0.3s ease, color 0.3s ease',
+                width: 'auto',
+                maxWidth: '100%'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = '#5CB6FF';
+                e.target.style.color = '#121212';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = '#1E7DF2';
+                e.target.style.color = '#F5EDEB';
+              }}
+            >
+              Try Our Demo Now!
+            </button>
+          )}
         </div>
+
+        {/* CTA Button - Show on Mobile only (after mockup) */}
+        {isPortrait && (
+          <div style={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            order: 4
+          }}>
+            <button 
+              onClick={() => window.open('https://www.figma.com/proto/zDl5EB8pvPLEPoCPM8syL6/prototype?node-id=4-2&t=HjdL5ODOXfDeIBxh-1', '_blank')}
+              style={{
+                background: '#1E7DF2',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 'clamp(8px, 1.5vh, 12px) clamp(20px, 4vw, 30px)',
+                position: 'relative',
+                borderRadius: '8px',
+                border: 'none',
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+                fontFamily: 'Afacad, sans-serif',
+                fontWeight: 'bold',
+                lineHeight: 'normal',
+                color: '#F5EDEB',
+                fontSize: 'clamp(14px, 2.5vw, 24px)',
+                transition: 'background 0.3s ease, color 0.3s ease',
+                width: 'auto',
+                maxWidth: '100%'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = '#5CB6FF';
+                e.target.style.color = '#121212';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = '#1E7DF2';
+                e.target.style.color = '#F5EDEB';
+              }}
+            >
+              Try Our Demo Now!
+            </button>
+          </div>
+        )}
       </div>
 
-      {/* Bottom Wave/Cloud Decorations - crops at page boundary */}
+      {/* Bottom Wave/Cloud Decorations - in document flow */}
       <div style={{
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
         width: '100%',
         lineHeight: 0,
-        zIndex: 0,
-        overflow: 'hidden',  // Prevents horizontal overflow
         margin: 0,
         padding: 0
       }}>
@@ -168,7 +221,7 @@ function FirstPage() {
             display: 'block',
             width: '100%',
             height: 'auto',
-            transform: `scale(${CLOUD_SCALE}) translate(${CLOUD_SHIFT_X}vw, ${CLOUD_SHIFT_Y}vh)` // <-- Cloud position controlled here
+            transform: 'scale(1.05)'
           }} 
           src="/cloudsbelow.png" 
         />

@@ -2,42 +2,28 @@ import React from 'react';
 import FeatureCard from './FeatureCard';
 
 function SecondPage() {
-  // ===== ADJUST CLOUD POSITION HERE =====
-  // X: negative = move left, positive = move right (in vw units)
-  // Y: negative = move up, positive = move down (in vh units)
-  // Cloud is scaled to 1.1x to prevent gaps when repositioning
-  const CLOUD_SHIFT_X = -4;  // <-- Edit this value
-  const CLOUD_SHIFT_Y = 1.5;  // <-- Edit this value (negative moves up for top clouds)
-  const CLOUD_SCALE = 1.1;  // <-- Edit to scale cloud (1.1 = 110%)
-  // ======================================
+  
 
   return (
     <section style={{
-      background: '#FFFFFF', // White background
+      background: '#FFFFFF',
       position: 'relative',
       width: '100%',
       minHeight: '100vh',
       overflow: 'hidden',
-      overflowX: 'hidden',  // Prevent horizontal scroll
+      overflowX: 'hidden',
       display: 'flex',
+      flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center',
-      padding: '80px 20px 60px 20px'
+      justifyContent: 'flex-start',
+      padding: 0
     }}>
-      {/* Top Wave/Cloud Decorations - flipped and crops at page boundary */}
+      {/* Top Wave/Cloud Decorations - in document flow */}
       <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
         width: '100%',
         lineHeight: 0,
-        zIndex: 0,
-        overflow: 'hidden',  // Prevents horizontal overflow
         margin: 0,
-        padding: 0,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
+        padding: 0
       }}>
         <img 
           alt="Clouds decoration top" 
@@ -45,7 +31,7 @@ function SecondPage() {
             display: 'block',
             width: '100%',
             height: 'auto',
-            transform: `scale(-${CLOUD_SCALE}, -${CLOUD_SCALE}) translate(${CLOUD_SHIFT_X}vw, ${CLOUD_SHIFT_Y}vh)` // <-- Cloud position controlled here (flipped horizontally and vertically, then scaled)
+            transform: 'scale(-1.05, -1.05)'
           }} 
           src="/cloudsbelow.png" 
         />
@@ -57,12 +43,13 @@ function SecondPage() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: '10px',
-        zIndex: 1,
+        gap: 'clamp(15px, 3vh, 30px)',
         position: 'relative',
         maxWidth: '1400px',
         width: '100%',
-        marginTop: '160px'
+        marginTop: 'clamp(20px, 4vh, 40px)',
+        flex: 1,
+        padding: '0 clamp(15px, 3vw, 40px) clamp(30px, 6vh, 60px)'
       }}>
         {/* Header Section */}
         <div style={{
@@ -82,7 +69,7 @@ function SecondPage() {
             <h2 style={{
               color: '#000',
               fontFamily: 'Afacad',
-              fontSize: '3rem',
+              fontSize: 'clamp(1.5rem, 5vw, 3rem)',
               fontStyle: 'normal',
               fontWeight: 700,
               lineHeight: 'normal',
@@ -95,7 +82,7 @@ function SecondPage() {
               src="/logotitipgo.png"
               alt="titipGO"
               style={{
-                height: '55px',
+                height: 'clamp(35px, 7vw, 55px)',
                 width: 'auto'
               }}
             />
@@ -107,7 +94,7 @@ function SecondPage() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: 'clamp(5px, 2vw, 10px)',
+          gap: 'clamp(15px, 3vw, 30px)',
           flexWrap: 'wrap',
           width: '100%'
         }}>
