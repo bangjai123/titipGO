@@ -1,27 +1,28 @@
 import React from 'react';
+import FeatureCard from './FeatureCard';
 
 function SecondPage() {
   // ===== ADJUST CLOUD POSITION HERE =====
   // X: negative = move left, positive = move right (in vw units)
   // Y: negative = move up, positive = move down (in vh units)
-  // Cloud is scaled to 1.2x to prevent gaps when repositioning
+  // Cloud is scaled to 1.1x to prevent gaps when repositioning
   const CLOUD_SHIFT_X = -4;  // <-- Edit this value
   const CLOUD_SHIFT_Y = 1.5;  // <-- Edit this value (negative moves up for top clouds)
-  const CLOUD_SCALE = 1.1;  // <-- Edit to scale cloud (1.2 = 120%)
+  const CLOUD_SCALE = 1.1;  // <-- Edit to scale cloud (1.1 = 110%)
   // ======================================
 
   return (
     <section style={{
-      background: '#F5EDEB', // White background
+      background: '#FFFFFF', // White background
       position: 'relative',
       width: '100%',
-      height: '100vh',
+      minHeight: '100vh',
       overflow: 'hidden',
       overflowX: 'hidden',  // Prevent horizontal scroll
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '20px 15px'
+      padding: '80px 20px 60px 20px'
     }}>
       {/* Top Wave/Cloud Decorations - flipped and crops at page boundary */}
       <div style={{
@@ -33,7 +34,10 @@ function SecondPage() {
         zIndex: 0,
         overflow: 'hidden',  // Prevents horizontal overflow
         margin: 0,
-        padding: 0
+        padding: 0,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
       }}>
         <img 
           alt="Clouds decoration top" 
@@ -53,35 +57,81 @@ function SecondPage() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: '20px',
+        gap: '10px',
         zIndex: 1,
         position: 'relative',
-        maxWidth: '1200px',
-        width: '100%'
+        maxWidth: '1400px',
+        width: '100%',
+        marginTop: '160px'
       }}>
-        <h2 style={{
-          fontFamily: 'Afacad, sans-serif',
-          fontWeight: 'bold',
-          fontSize: 'clamp(28px, 4vw, 48px)',
-          color: '#121212',
-          margin: 0,
-          textAlign: 'center'
+        {/* Header Section */}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '10px'
         }}>
-          Tentang titipGO
-        </h2>
-        
-        <p style={{
-          fontFamily: 'Afacad, sans-serif',
-          fontWeight: 'normal',
-          fontSize: 'clamp(16px, 2vw, 24px)',
-          color: '#121212',
-          margin: 0,
-          textAlign: 'center',
-          maxWidth: '800px',
-          lineHeight: '1.6'
+          {/* Title with Logo */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '15px',
+            flexWrap: 'wrap'
+          }}>
+            <h2 style={{
+              color: '#000',
+              fontFamily: 'Afacad',
+              fontSize: '3rem',
+              fontStyle: 'normal',
+              fontWeight: 700,
+              lineHeight: 'normal',
+              margin: 0,
+              textAlign: 'center'
+            }}>
+              Ada apa di
+            </h2>
+            <img 
+              src="/logotitipgo.png"
+              alt="titipGO"
+              style={{
+                height: '55px',
+                width: 'auto'
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Feature Showcase - Three iPhone Mockups */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 'clamp(5px, 2vw, 10px)',
+          flexWrap: 'wrap',
+          width: '100%'
         }}>
-          Kemudahan titip belanja dengan kurasi dan transparansi biaya.
-        </p>
+          {/* Catalog Feature */}
+          <FeatureCard 
+            image="/catalog.png"
+            title="Catalog"
+            description="Jelajahi semua pilihan merchandise di aplikasi ini"
+          />
+
+          {/* Payment Feature */}
+          <FeatureCard 
+            image="/payment.png"
+            title="Payment"
+            description="Bayar dengan mudah dan aman melalui aplikasi"
+          />
+
+          {/* History Feature */}
+          <FeatureCard 
+            image="/history.png"
+            title="Order Status"
+            description="Lihat riwayat dan status pesananmu secara langsung"
+          />
+        </div>
       </div>
     </section>
   );
