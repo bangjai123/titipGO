@@ -76,7 +76,7 @@ function SecondPage() {
               margin: 0,
               textAlign: 'center'
             }}>
-              Ada apa di
+              What's on
             </h2>
             <img 
               src="/logotitipgo.png"
@@ -102,21 +102,21 @@ function SecondPage() {
           <FeatureCard 
             image="/catalog.png"
             title="Catalog"
-            description="Jelajahi semua pilihan merchandise di aplikasi ini"
+            description="Explore all the merchandise options in this app"
           />
 
           {/* Payment Feature */}
           <FeatureCard 
             image="/payment.png"
             title="Payment"
-            description="Bayar dengan mudah dan aman melalui aplikasi"
+            description="Pay easily and securely via the app"
           />
 
           {/* History Feature */}
           <FeatureCard 
             image="/history.png"
             title="Order Status"
-            description="Lihat riwayat dan status pesananmu secara langsung"
+            description="View your order history and status directly"
           />
         </div>
       </div>
