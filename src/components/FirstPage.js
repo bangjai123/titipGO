@@ -121,14 +121,14 @@ function FirstPage() {
               margin: 0,
               width: '100%'
             }}>
-              TitipGO (stylized: titipGO) adalah platform digital untuk pembelian merchandise K-Pop yang transparan dan tersentralisasi. Dengan fitur pelacakan status pesanan yang real-time, katalog merchandise yang terorganisasi, dan sistem pembayaran yang aman, TitipGO dapat memberikan pengalaman berbelanja yang efisien, terpercaya, dan terjangkau bagi penggemar K-Pop di Indonesia.
+              Titipgo (stylized as titipGO) is a transparent and centralized digital platform for purchasing K-Pop merchandise. With real-time order tracking, an organized merchandise catalog, and a secure payment system, TitipGO provides an efficient, reliable, and affordable shopping experience for K-Pop fans in Indonesia.
             </p>
           </div>
 
           {/* CTA Button - Show on Desktop only */}
           {!isPortrait && (
             <button 
-              onClick={() => window.open('https://www.figma.com/proto/zDl5EB8pvPLEPoCPM8syL6/prototype?node-id=4-2&t=HjdL5ODOXfDeIBxh-1', '_blank')}
+              onClick={() => window.open('https://www.figma.com/proto/zDl5EB8pvPLEPoCPM8syL6/prototype?node-id=439-631&t=oZsz4yUhxZQsWsks-1', '_blank')}
               style={{
                 background: '#1E7DF2',
                 display: 'flex',
